@@ -36,7 +36,7 @@ public class TestBaseReport {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDownMethod(ITestResult result) throws IOException {
+    public void tearDownMethod(ITestResult result) throws IOException, InterruptedException {
         if (result.getStatus() == ITestResult.FAILURE) {
             String screenshotLocation = getScreenshot(result.getName());
             extentTest.fail(result.getName());

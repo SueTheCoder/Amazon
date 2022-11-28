@@ -10,11 +10,12 @@ import org.testng.Assert;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.Log;
+
 import java.util.List;
 
-public class Page {
+public class MenuPage {
 
-    public Page() {
+    public MenuPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
@@ -51,11 +52,11 @@ public class Page {
     @FindBy(xpath = "//*[text()='stream music']")
     public WebElement streamMusicText;
 
-    @FindBy(linkText = "Computers")
-    public WebElement amazonComputersLink;
+    @FindBy(linkText = "Kindle E-readers & Books")
+    public WebElement amazonBooksMenuLink;
 
-    @FindBy(xpath = "//*[text()='computers']")
-    public WebElement computersTitleText;
+    @FindBy(xpath = "//*[text()='kindle e-readers']")
+    public WebElement booksTitleText;
 
     @FindBy(id = "twotabsearchtextbox")
     public WebElement searchBox;
@@ -187,27 +188,31 @@ public class Page {
 
     public void amazonMusicMenu() {
         Log.startTestCase("amazonMusicMenu");
-        waitFor(5);
+        waitFor(3);
+        jse.executeScript("document.getElementById('nav-hamburger-menu').setAttribute('style','border:2x solid red;background:blue');");
         allMenusButton.click();
-        waitFor(5);
+        waitFor(3);
+        jse.executeScript("document.getElementById('hmenu-content').setAttribute('style','border:2x solid red;background:blue');");
         amazonMusicMenuLink.click();
-        waitFor(5);
+        waitFor(3);
         Assert.assertTrue(streamMusicText.isDisplayed());
         Log.info("Music menu is OK");
         Log.endTestCase("amazonMusicMenu");
 
     }
 
-    public void amazonComputersMenu() {
+    public void amazonBooksMenu() {
         Log.startTestCase("amazonComputersMenu");
         waitFor(5);
+        jse.executeScript("document.getElementById('nav-hamburger-menu').setAttribute('style','border:2x solid red;background:blue');");
         allMenusButton.click();
-        waitFor(5);
-        amazonComputersLink.click();
-        waitFor(5);
-        Assert.assertTrue(computersTitleText.isDisplayed());
-        Log.info(" Computer Menu is OK");
-        Log.endTestCase("amazonComputersMenu");
+        waitFor(3);
+        jse.executeScript("document.getElementById('hmenu-content').setAttribute('style','border:2x solid red;background:blue');");
+        amazonBooksMenuLink.click();
+        waitFor(2);
+        Assert.assertTrue(booksTitleText.isDisplayed());
+        Log.info(" Books Menu is OK");
+        Log.endTestCase("amazonBooksMenu");
     }
 
     public void searchProduct() {
@@ -231,7 +236,6 @@ public class Page {
 
     public void filterByRate() {
         Log.startTestCase("filterByRate");
-        waitFor(3);
         jse.executeScript("document.getElementById('p_72/1248879011').setAttribute('style','border:2x solid red;background:blue');");
         waitFor(3);
         fiveStarFilter.click();
@@ -253,9 +257,9 @@ public class Page {
         jse.executeScript("document.getElementById('submit.add-to-cart').setAttribute('style','border:2x solid red;background:red');");
         addToCartButton.click();
         waitFor(2);
-        noThanks.click();
-        closeCartButton.click();
-        waitFor(2);
+        //noThanks.click();
+        //closeCartButton.click();
+        //waitFor(2);
         searchBox.clear();
         searchBox.sendKeys(ConfigReader.getProperty("secondproductname"), Keys.ENTER);
         babyShoeFirstProduct.click();
@@ -268,6 +272,8 @@ public class Page {
         airHeadPhoneFirstProduct.click();
         waitFor(2);
         addToCartButton.click();
+        noThanks.click();
+        //closeCartButton.click();
         waitFor(2);
         showCartButton.click();
         String expectedCartTotal = ConfigReader.getProperty("cartTotal");
@@ -276,6 +282,7 @@ public class Page {
         waitFor(2);
         Log.info("user can add product to cart");
         Log.endTestCase("addProductsToCart");
+
     }
 
     public void addOneProductToCart() {
@@ -309,7 +316,6 @@ public class Page {
         action.moveToElement(menu).click(signOutClick).perform();
         Log.info("user can create own shopping list");
         Log.endTestCase("shopping list");
-        Driver.closeDriver();
     }
 
     public void multiFilters() {
@@ -327,7 +333,6 @@ public class Page {
         waitFor(4);
         Log.info(" user can use multi filters, while searching");
         Log.endTestCase("multiFilters");
-        Driver.closeDriver();
     }
 
     public static void waitFor(int sec) {

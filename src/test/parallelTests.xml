@@ -2,8 +2,8 @@
 <suite name="parallel run">
     <test name="parallel test" parallel="classes" thread-count="2" verbose="2">
         <classes>
-            <class name="tests.US01_TC01_ValidSignIn"/>
             <class name="tests.US04_TC01_SearchProduct"/>
+            <class name="tests.US03_TC01_AmazonMusicMenu"/>
         </classes>
     </test>
 </suite>
