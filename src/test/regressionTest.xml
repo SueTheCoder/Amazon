@@ -2,11 +2,20 @@
 <suite name="regression tests">
     <test name="regression classes">
        <classes>
+           <class name="tests.US01_TC01_ValidSignIn"/>
+           <class name="tests.US02_TC01_InValidEmailSignIn"/>
+           <class name="tests.US02_TC02_InvalidPasswordSignIn"/>
            <class name="tests.US03_TC01_AmazonMusicMenu"/>
+           <class name="tests.US03_TC02_AmazonBooksMenu"/>
            <class name="tests.US04_TC01_SearchProduct"/>
            <class name="tests.US05_TC01_FilterByRate"/>
            <class name="tests.US06_TC01_AddProductsToCart"/>
-           <class name="tests.US01_TC01_ValidSignIn"/>
+           <class name="tests.US07_TC01_ShoppingList"/>
+           <class name="tests.US08_TC01_MultiFilters"/>
+           <class name="tests.US09_TC01_SignAndSearchProduct"/>
+           <class name="tests.US10_TC01_SignSearchProductWithRate"/>
+           <class name="tests.US11_TC01_SignSearchProductWithRateAndAddtoCart"/>
+           <class name="tests.US12_TC01_CheckProductPrice"/>
        </classes>
     </test>
 </suite>

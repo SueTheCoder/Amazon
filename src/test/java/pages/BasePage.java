@@ -10,6 +10,7 @@ import org.testng.Assert;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.Log;
+
 import java.util.List;
 
 public class BasePage {
@@ -302,10 +303,10 @@ public class BasePage {
         waitFor(2);
         addToCartButton.click();
         waitFor(2);
-        noThanks.click();
-        //goToCartButton.click();
+        //noThanks.click();
+        goToCartButton.click();
 //        closeCartButton.click();
-//        waitFor(2);
+        waitFor(2);
         showCartButton.click();
         String expectedCartTotal = ConfigReader.getProperty("cartTotal1");
         String actualCartTotal = cartItemSubTotalText.getText();
@@ -343,6 +344,24 @@ public class BasePage {
         waitFor(4);
         Log.info(" user can use multi filters, while searching");
         Log.endTestCase("multiFilters");
+    }
+
+
+    public void checkPriceBetween25to50() {
+        Log.startTestCase("checkPriceBetween25to50");
+        searchBox.sendKeys(ConfigReader.getProperty("filterSearchProductName"), Keys.ENTER);
+        waitFor(4);
+        jse.executeScript("document.getElementById('p_72/1248879011').setAttribute('style','border:2x solid red;background:red');");
+        fiveStarFilter.click();
+        waitFor(4);
+        jse.executeScript("document.getElementById('p_36/1253504011').setAttribute('style','border:2x solid red;background:red');");
+        priceFilter25to50.click();
+        waitFor(4);
+        Assert.assertTrue(priceFilter50Value.isDisplayed()
+                && priceFilterClear.isDisplayed());
+        waitFor(4);
+        Log.info(" user can see the five start product and prices are between $25 to $50");
+        Log.endTestCase("checkPriceBetween25to50");
     }
 
     public static void waitFor(int sec) {
