@@ -2,9 +2,8 @@
 <suite name="smoke tests">
     <test name="smoke classes">
        <classes>
+           <class name="tests.US04_TC01_SearchProduct"/>
            <class name="tests.US01_TC01_ValidSignIn"/>
-           <class name="tests.US03_TC01_AmazonMusicMenu"/>
-           <class name="tests.US06_TC01_AddProductsToCart"/>
        </classes>
     </test>
 </suite>

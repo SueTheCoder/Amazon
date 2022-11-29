@@ -16,6 +16,7 @@ public class US05_TC01_FilterByRate extends TestBaseReport {
         basePage.filterByRate();
         extentTest.pass("User  filtered the searched product by rate and verified that the listed products are suitable for the filter.");
         //Driver.closeDriver();
+
     }
 
 

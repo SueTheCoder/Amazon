@@ -93,6 +93,10 @@ public class BasePage {
     @FindBy(id = "nav-cart-count")
     public WebElement showCartButton;
 
+    @FindBy(id = "nav-cart-count-container")
+    public WebElement goToCartButton;
+
+
     @FindBy(id = "sc-subtotal-label-activecart")
     public WebElement cartItemSubTotalText;
 
@@ -123,6 +127,7 @@ public class BasePage {
         waitFor(3);
         action.moveToElement(menu).perform();
         waitFor(3);
+        jse.executeScript("document.getElementById('nav-flyout-ya-signin').setAttribute('style','border:2x solid red;background:blue');");
         action.click(signInButton).perform();
         waitFor(3);
     }
@@ -131,14 +136,16 @@ public class BasePage {
         Log.startTestCase("valid sign in");
         jse.executeScript("document.getElementById('ap_email').setAttribute('style','border:2x solid red;background:yellow');");
         input_email.sendKeys(ConfigReader.getProperty("validemail"));
-        waitFor(3);
+        waitFor(4);
+        jse.executeScript("document.getElementById('continue').setAttribute('style','border:2x solid red;background:blue');");
         continueButton.click();
-        waitFor(3);
+        waitFor(4);
         jse.executeScript("document.getElementById('ap_password').setAttribute('style','border:2x solid red;background:yellow');");
         input_password.sendKeys(ConfigReader.getProperty("validpassword"));
-        waitFor(2);
+        waitFor(3);
+        jse.executeScript("document.getElementById('signInSubmit').setAttribute('style','border:2x solid red;background:blue');");
         signInSubmit.click();
-        waitFor(2);
+        waitFor(3);
         Assert.assertTrue(menu.getText().contains("tester"));
         Log.info("login process is successful");
         Log.endTestCase("valid sign in");
@@ -146,10 +153,12 @@ public class BasePage {
     }
 
     public void signOut() {
-        waitFor(5);
+        waitFor(3);
         action.moveToElement(menu).perform();
-        waitFor(5);
+        waitFor(3);
+        jse.executeScript("document.getElementById('nav-item-signout').setAttribute('style','border:2x solid red;background:blue');");
         action.click(signOutClick).perform();
+        waitFor(3);
         Log.info("sign out is successful");
     }
 
@@ -217,12 +226,12 @@ public class BasePage {
     public void searchProduct() {
         Log.startTestCase("searchProduct");
         waitFor(3);
-        jse.executeScript("document.getElementById('twotabsearchtextbox').setAttribute('style','border:2x solid red;background:green');");
-        waitFor(3);
+        jse.executeScript("document.getElementById('twotabsearchtextbox').setAttribute('style','border:2x solid red;background:yellow');");
+        waitFor(4);
         searchBox.click();
-        waitFor(3);
+        waitFor(4);
         searchBox.sendKeys(ConfigReader.getProperty("firstproductname") + Keys.ENTER);
-        waitFor(3);
+        waitFor(4);
         List<WebElement> wirelessMouseList = wirelessMouseProducts;
 
         for (WebElement w : wirelessMouseList) {
@@ -257,7 +266,7 @@ public class BasePage {
         addToCartButton.click();
         waitFor(2);
         //noThanks.click();
-        //closeCartButton.click();
+        closeCartButton.click();
         //waitFor(2);
         searchBox.clear();
         searchBox.sendKeys(ConfigReader.getProperty("secondproductname"), Keys.ENTER);
@@ -294,8 +303,10 @@ public class BasePage {
         addToCartButton.click();
         waitFor(2);
         noThanks.click();
-        closeCartButton.click();
-        waitFor(2);
+        //goToCartButton.click();
+//        closeCartButton.click();
+//        waitFor(2);
+        showCartButton.click();
         String expectedCartTotal = ConfigReader.getProperty("cartTotal1");
         String actualCartTotal = cartItemSubTotalText.getText();
         Assert.assertEquals(expectedCartTotal, actualCartTotal);

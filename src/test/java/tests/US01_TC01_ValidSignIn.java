@@ -2,6 +2,7 @@ package tests;
 
 import org.testng.annotations.Test;
 import pages.BasePage;
+import utilities.Driver;
 import utilities.TestBaseReport;
 
 public class US01_TC01_ValidSignIn extends TestBaseReport {
@@ -17,7 +18,7 @@ public class US01_TC01_ValidSignIn extends TestBaseReport {
         basePage.signIn();
         basePage.signOut();
         extentTest.pass("User  logged in with a valid username and password");
-        //Driver.closeDriver();
+        Driver.closeDriver();
 
     }
 
