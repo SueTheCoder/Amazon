@@ -9,7 +9,7 @@ public class US10_TC01_SignSearchProductWithRate extends TestBaseReport {
 
     @Test
     public void test01() {
-        extentTest = extentReports.createTest("US04_TC01_Searching a product and verify the all listed products contain searching keyword",
+        extentTest = extentReports.createTest("US04g_TC01_Searching a product and verify the all listed products contain searching keyword",
                 "User can search a product and verify the all listed products contain searched keyword.");
         basePage.goToHomePage();
         basePage.signInMenuClick();

@@ -226,7 +226,7 @@ public class BasePage {
 
     public void searchProduct() {
         Log.startTestCase("searchProduct");
-        waitFor(3);
+        waitFor(4);
         jse.executeScript("document.getElementById('twotabsearchtextbox').setAttribute('style','border:2x solid red;background:yellow');");
         waitFor(4);
         searchBox.click();
@@ -246,11 +246,11 @@ public class BasePage {
     public void filterByRate() {
         Log.startTestCase("filterByRate");
         jse.executeScript("document.getElementById('p_72/1248879011').setAttribute('style','border:2x solid red;background:blue');");
-        waitFor(3);
+        waitFor(4);
         fiveStarFilter.click();
-        waitFor(3);
+        waitFor(4);
         List<WebElement> upFourStarProducts = fiveStarFilterProducts;
-        waitFor(2);
+        waitFor(4);
         for (int i = 0; i < 27; i++) {
             Assert.assertTrue(upFourStarProducts.get(i).isDisplayed());
         }

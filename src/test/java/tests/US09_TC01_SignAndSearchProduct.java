@@ -9,13 +9,13 @@ public class US09_TC01_SignAndSearchProduct extends TestBaseReport {
 
     @Test
     public void test01() {
-        extentTest = extentReports.createTest("US04_TC01_Searching a product and verify the all listed products contain searching keyword",
+        extentTest = extentReports.createTest("US09_TC01_Sign in, searching a product and verify the all listed products contain searching keyword",
                 "User can search a product and verify the all listed products contain searched keyword.");
         basePage.goToHomePage();
         basePage.signInMenuClick();
         basePage.signIn();
         basePage.searchProduct();
-        extentTest.pass("User searched a product and verified the all listed products contain searched keyword.");
+        extentTest.pass("User signed in and searched a product and verified the all listed products contain searched keyword.");
         //Driver.closeDriver();
     }
 
