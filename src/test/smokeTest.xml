@@ -2,7 +2,6 @@
 <suite name="smoke tests">
     <test name="smoke classes">
        <classes>
-           <class name="tests.US05_TC01_FilterByRate"/>
            <class name="tests.US01_TC01_ValidSignIn"/>
        </classes>
     </test>
