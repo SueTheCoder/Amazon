@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -94,6 +95,10 @@ public class MenuPage {
     @FindBy(id = "nav-cart-count")
     public WebElement showCartButton;
 
+    @FindBy(id = "nav-cart-count-container")
+    public WebElement goToCartButton;
+
+
     @FindBy(id = "sc-subtotal-label-activecart")
     public WebElement cartItemSubTotalText;
 
@@ -124,6 +129,7 @@ public class MenuPage {
         waitFor(3);
         action.moveToElement(menu).perform();
         waitFor(3);
+        jse.executeScript("document.getElementById('nav-flyout-ya-signin').setAttribute('style','border:2x solid red;background:blue');");
         action.click(signInButton).perform();
         waitFor(3);
     }
@@ -132,14 +138,16 @@ public class MenuPage {
         Log.startTestCase("valid sign in");
         jse.executeScript("document.getElementById('ap_email').setAttribute('style','border:2x solid red;background:yellow');");
         input_email.sendKeys(ConfigReader.getProperty("validemail"));
-        waitFor(3);
+        waitFor(4);
+        jse.executeScript("document.getElementById('continue').setAttribute('style','border:2x solid red;background:blue');");
         continueButton.click();
-        waitFor(3);
+        waitFor(4);
         jse.executeScript("document.getElementById('ap_password').setAttribute('style','border:2x solid red;background:yellow');");
         input_password.sendKeys(ConfigReader.getProperty("validpassword"));
-        waitFor(2);
+        waitFor(3);
+        jse.executeScript("document.getElementById('signInSubmit').setAttribute('style','border:2x solid red;background:blue');");
         signInSubmit.click();
-        waitFor(2);
+        waitFor(3);
         Assert.assertTrue(menu.getText().contains("tester"));
         Log.info("login process is successful");
         Log.endTestCase("valid sign in");
@@ -147,10 +155,12 @@ public class MenuPage {
     }
 
     public void signOut() {
-        waitFor(5);
+        waitFor(3);
         action.moveToElement(menu).perform();
-        waitFor(5);
+        waitFor(3);
+        jse.executeScript("document.getElementById('nav-item-signout').setAttribute('style','border:2x solid red;background:blue');");
         action.click(signOutClick).perform();
+        waitFor(3);
         Log.info("sign out is successful");
     }
 
@@ -217,13 +227,13 @@ public class MenuPage {
 
     public void searchProduct() {
         Log.startTestCase("searchProduct");
-        waitFor(3);
-        jse.executeScript("document.getElementById('twotabsearchtextbox').setAttribute('style','border:2x solid red;background:green');");
-        waitFor(3);
+        waitFor(4);
+        jse.executeScript("document.getElementById('twotabsearchtextbox').setAttribute('style','border:2x solid red;background:yellow');");
+        waitFor(4);
         searchBox.click();
-        waitFor(3);
+        waitFor(4);
         searchBox.sendKeys(ConfigReader.getProperty("firstproductname") + Keys.ENTER);
-        waitFor(3);
+        waitFor(4);
         List<WebElement> wirelessMouseList = wirelessMouseProducts;
 
         for (WebElement w : wirelessMouseList) {
@@ -237,11 +247,11 @@ public class MenuPage {
     public void filterByRate() {
         Log.startTestCase("filterByRate");
         jse.executeScript("document.getElementById('p_72/1248879011').setAttribute('style','border:2x solid red;background:blue');");
-        waitFor(3);
+        waitFor(4);
         fiveStarFilter.click();
-        waitFor(3);
+        waitFor(4);
         List<WebElement> upFourStarProducts = fiveStarFilterProducts;
-        waitFor(2);
+        waitFor(4);
         for (int i = 0; i < 27; i++) {
             Assert.assertTrue(upFourStarProducts.get(i).isDisplayed());
         }
@@ -252,6 +262,7 @@ public class MenuPage {
     public void addProductsToCart() {
         Log.startTestCase("addProductsToCart");
         searchBox.sendKeys(ConfigReader.getProperty("firstproductname"), Keys.ENTER);
+        waitFor(2);
         wirelessMouseFirstProduct.click();
         waitFor(2);
         jse.executeScript("document.getElementById('submit.add-to-cart').setAttribute('style','border:2x solid red;background:red');");
@@ -294,9 +305,11 @@ public class MenuPage {
         waitFor(2);
         addToCartButton.click();
         waitFor(2);
-        noThanks.click();
-        closeCartButton.click();
+        //noThanks.click();
+        goToCartButton.click();
+//        closeCartButton.click();
         waitFor(2);
+        showCartButton.click();
         String expectedCartTotal = ConfigReader.getProperty("cartTotal1");
         String actualCartTotal = cartItemSubTotalText.getText();
         Assert.assertEquals(expectedCartTotal, actualCartTotal);
@@ -309,7 +322,10 @@ public class MenuPage {
 
     public void createAList() {
         Log.startTestCase("shopping list");
-        action.moveToElement(menu).click(createListLink).perform();
+        action.moveToElement(menu).perform();
+        waitFor(2);
+        action.click(createListLink).perform();
+        waitFor(2);
         action.sendKeys(Keys.ESCAPE).perform();
         Assert.assertTrue(createAListButton.isDisplayed());
         waitFor(2);
@@ -333,6 +349,21 @@ public class MenuPage {
         waitFor(4);
         Log.info(" user can use multi filters, while searching");
         Log.endTestCase("multiFilters");
+    }
+
+
+    public void checkPrice() {
+        Log.startTestCase("checkingPriceAProduct");
+        searchBox.sendKeys(ConfigReader.getProperty("filterSearchProductName"), Keys.ENTER);
+        waitFor(2);
+        priceFilter25to50.click();
+        Assert.assertTrue(priceFilter50Value.isDisplayed());
+        waitFor(2);
+        int actualFirstProductPrice = Integer.parseInt(Driver.getDriver().findElement(By.xpath("(//span[@class='a-price-whole'])[1]")).getText());
+        System.out.println("actualFirstProductPrice = " + actualFirstProductPrice);
+        Assert.assertTrue(actualFirstProductPrice > 25 && actualFirstProductPrice < 50);
+        Log.info(" user can validate that filtered product prices are suitable for filter");
+        Log.endTestCase("checkingPriceAProduct");
     }
 
     public static void waitFor(int sec) {

@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -261,13 +262,14 @@ public class BasePage {
     public void addProductsToCart() {
         Log.startTestCase("addProductsToCart");
         searchBox.sendKeys(ConfigReader.getProperty("firstproductname"), Keys.ENTER);
+        waitFor(2);
         wirelessMouseFirstProduct.click();
         waitFor(2);
         jse.executeScript("document.getElementById('submit.add-to-cart').setAttribute('style','border:2x solid red;background:red');");
         addToCartButton.click();
         waitFor(2);
         //noThanks.click();
-        closeCartButton.click();
+        //closeCartButton.click();
         //waitFor(2);
         searchBox.clear();
         searchBox.sendKeys(ConfigReader.getProperty("secondproductname"), Keys.ENTER);
@@ -320,7 +322,10 @@ public class BasePage {
 
     public void createAList() {
         Log.startTestCase("shopping list");
-        action.moveToElement(menu).click(createListLink).perform();
+        action.moveToElement(menu).perform();
+        waitFor(2);
+        action.click(createListLink).perform();
+        waitFor(2);
         action.sendKeys(Keys.ESCAPE).perform();
         Assert.assertTrue(createAListButton.isDisplayed());
         waitFor(2);
@@ -347,21 +352,18 @@ public class BasePage {
     }
 
 
-    public void checkPriceBetween25to50() {
-        Log.startTestCase("checkPriceBetween25to50");
+    public void checkPrice() {
+        Log.startTestCase("checkingPriceAProduct");
         searchBox.sendKeys(ConfigReader.getProperty("filterSearchProductName"), Keys.ENTER);
-        waitFor(4);
-        jse.executeScript("document.getElementById('p_72/1248879011').setAttribute('style','border:2x solid red;background:red');");
-        fiveStarFilter.click();
-        waitFor(4);
-        jse.executeScript("document.getElementById('p_36/1253504011').setAttribute('style','border:2x solid red;background:red');");
+        waitFor(2);
         priceFilter25to50.click();
-        waitFor(4);
-        Assert.assertTrue(priceFilter50Value.isDisplayed()
-                && priceFilterClear.isDisplayed());
-        waitFor(4);
-        Log.info(" user can see the five start product and prices are between $25 to $50");
-        Log.endTestCase("checkPriceBetween25to50");
+        Assert.assertTrue(priceFilter50Value.isDisplayed());
+        waitFor(2);
+        int actualFirstProductPrice = Integer.parseInt(Driver.getDriver().findElement(By.xpath("(//span[@class='a-price-whole'])[1]")).getText());
+        System.out.println("actualFirstProductPrice = " + actualFirstProductPrice);
+        Assert.assertTrue(actualFirstProductPrice > 25 && actualFirstProductPrice < 50);
+        Log.info(" user can validate that filtered product prices are suitable for filter");
+        Log.endTestCase("checkingPriceAProduct");
     }
 
     public static void waitFor(int sec) {
